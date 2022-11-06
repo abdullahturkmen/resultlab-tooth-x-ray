@@ -71,7 +71,9 @@ function App() {
                 url: `${apiURL}`,
                 data: formData,
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
+                    'Access-Control-Allow-Origin' : '*',
+                    'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
                 }
             }).then(response => {
                 console.log("datalar", response.data.result)
