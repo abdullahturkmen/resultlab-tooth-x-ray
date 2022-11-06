@@ -3,6 +3,7 @@ import toothImg from "./assets/img/tooth.png";
 import {useEffect, useState, useRef} from 'react';
 import axios from "axios";
 
+
 const apiURL = process.env.REACT_APP_API_URL;
 
 function App() {
@@ -60,7 +61,8 @@ function App() {
                 headers: {
                     "accept": "application/json",
                     "Content-Type": "multipart/form-data"
-                }
+                },
+                proxy: false,
             }).then(response => {
                 console.log("datalar", response.data.result);
                 setXrayDetail(response.data.result);
