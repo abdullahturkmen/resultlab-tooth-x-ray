@@ -15,19 +15,9 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [toothCategories, setToothCategories] = useState([]);
 
-
-    useEffect(() => {
-
-        console.log("file-size: ", selectedFileSize)
-
-    }, [selectedFileSize]);
-
-
     useEffect(() => {
 
         const xrayImg = document.querySelector('.xray-img');
-        
-
         xrayDetail.map(e => {
             const elementLeft = e.xmin * 100 / selectedFileSize.width;
             const elementTop = e.ymin * 100 / selectedFileSize.height;
@@ -39,25 +29,22 @@ function App() {
             newElement.style.top = `${elementTop}%`;
             newElement.style.width = `${elementWidth}%`;
             newElement.style.height = `${elementHeight}%`;
-
             xrayImg.appendChild(newElement)
-            console.log("e : ", e)
         })
 
     }, [xrayDetail]);
 
 
-    const categories =  (resData) => {
-        return resData.reduce((acc, obj) => {           
-            const key = obj['name'];         
+    const categories = (resData) => {
+        return resData.reduce((acc, obj) => {
+            const key = obj['name'];
             if (!acc[key]) {
-               acc[key] = [];
+                acc[key] = [];
             }
             acc[key].push(obj);
             return acc;
-         }, {});
+        }, {});
     }
-
 
 
     const handleSubmit = async (event) => {
@@ -71,6 +58,7 @@ function App() {
                 url: `${apiURL}`,
                 data: formData,
                 headers: {
+                    "accept": "application/json",
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
@@ -326,18 +314,20 @@ function App() {
                             }
 
                                 <div className="analysis-section counter">
-                                
+
                                     {
-                                     toothCategories &&
-                                     Object.entries(toothCategories).map((e, index) => (
-                                        <div className="counter-btn kist" key={index}>
-                                        <div>{e[0]}</div>
-                                        <div>{e[1].length}</div>
-                                    </div>
-                                     ))
-                                    }
-                                   
-                                </div>
+                                    toothCategories && Object.entries(toothCategories).map((e, index) => (
+                                        <div className="counter-btn kist"
+                                            key={index}>
+                                            <div>{
+                                                e[0]
+                                            }</div>
+                                            <div>{
+                                                e[1].length
+                                            }</div>
+                                        </div>
+                                    ))
+                                } </div>
 
                             </div>
                         </div>
