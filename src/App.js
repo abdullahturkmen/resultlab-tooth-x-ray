@@ -71,18 +71,14 @@ function App() {
                 url: `${apiURL}`,
                 data: formData,
                 headers: {
-                    "Content-Type": "multipart/form-data",
-                    'Access-Control-Allow-Origin' : '*',
-                    'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                    "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
-                console.log("datalar", response.data.result)
-                setXrayDetail(response.data.result)
-                setIsChecked(true)
-                setIsLoading(false)
-
-                setToothCategories(categories(response.data.result))
-               
+                console.log("datalar", response.data.result);
+                setXrayDetail(response.data.result);
+                setIsChecked(true);
+                setIsLoading(false);
+                setToothCategories(categories(response.data.result));
             });
         } catch (error) {
             console.log(error)
@@ -91,6 +87,8 @@ function App() {
 
 
     const handleFileSelect = (event) => {
+        setXrayDetail([])
+        setIsChecked(false)
         setSelectedFile(event.target.files[0])
         setSelectedImg(URL.createObjectURL(event.target.files[0]));
 
@@ -332,7 +330,7 @@ function App() {
                                     {
                                      toothCategories &&
                                      Object.entries(toothCategories).map((e, index) => (
-                                        <div className="counter-btn kist">
+                                        <div className="counter-btn kist" key={index}>
                                         <div>{e[0]}</div>
                                         <div>{e[1].length}</div>
                                     </div>
