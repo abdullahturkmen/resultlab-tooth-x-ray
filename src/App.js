@@ -1,5 +1,6 @@
 import toothXcrayImg from "./assets/img/tooth-xray.png";
 import toothImg from "./assets/img/tooth.png";
+import eyeImg from "./assets/img/eye.png";
 import {useEffect, useState, useRef} from 'react';
 import axios from "axios";
 
@@ -15,17 +16,30 @@ function App() {
     const [isChecked, setIsChecked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [toothCategories, setToothCategories] = useState([]);
+    const colors = [
+        'red',
+        'green',
+        'yellow',
+        'blue',
+        'black'
+    ];
+
+    useEffect(() => {
+        console.log("renk", colors[1])
+        console.log("categoriler", toothCategories)
+    }, [toothCategories]);
 
     useEffect(() => {
 
         const xrayImg = document.querySelector('.xray-img');
-        xrayDetail.map(e => {
+        xrayDetail.map((e,index) => {
             const elementLeft = e.xmin * 100 / selectedFileSize.width;
             const elementTop = e.ymin * 100 / selectedFileSize.height;
             const elementWidth = (e.xmax - e.xmin) * 100 / selectedFileSize.width;
             const elementHeight = (e.ymax - e.ymin) * 100 / selectedFileSize.height;
             const newElement = document.createElement("div");
             newElement.classList.add('teeth-bulgu');
+            newElement.classList.add(`teeth-bulgu-${index}`);
             newElement.style.left = `${elementLeft}%`;
             newElement.style.top = `${elementTop}%`;
             newElement.style.width = `${elementWidth}%`;
@@ -62,7 +76,7 @@ function App() {
                     "accept": "application/json",
                     "Content-Type": "multipart/form-data"
                 },
-                proxy: false,
+                proxy: false
             }).then(response => {
                 console.log("datalar", response.data.result);
                 setXrayDetail(response.data.result);
@@ -95,6 +109,21 @@ function App() {
             };
         }
 
+    }
+
+    const teethSelected = (num) => {
+        
+        if(document.querySelector(`.teeth-${num}`).classList.contains('selected')){
+           
+            document.querySelector(`.teeth-${num}`).classList.remove('selected')
+            document.querySelector(`.teeth-bulgu-${num}`).classList.remove('selected')
+        }
+        else{
+            document.querySelector(`.teeth-${num}`).classList.add('selected')
+            document.querySelector(`.teeth-bulgu-${num}`).classList.add('selected')
+        }
+       
+        
     }
 
     return (
@@ -282,18 +311,40 @@ function App() {
                                         <span>38</span>
                                     </div>
                                 </div>
+                                <div className="analysis-section counter">
+
+                                    {
+                                    toothCategories && Object.entries(toothCategories).map((e, index) => (
+                                        <div className={
+                                                `counter-btn kist ${
+                                                    colors[index]
+                                                }`
+                                            }
+                                            key={index}>
+                                            <div>{
+                                                e[0]
+                                            }</div>
+                                            <div>{
+                                                e[1].length
+                                            }</div>
+                                        </div>
+                                    ))
+                                } </div>
                             </div>
                             <div className="col-12 col-lg-4">
 
                                 {
                                 xrayDetail.map((e, index) => (
 
-                                    <div className="analysis-section details"
+                                    <div className={`analysis-section details teeth-${index}`}
                                         key={index}>
+                                            <img src={eyeImg}
+                                                alt="" className="tooth-visibility" onClick={() => teethSelected(index)}/>
                                         <div className="tooth-numbers">
                                             <img src={toothImg}
                                                 alt=""/>
-                                            <span>38</span>
+                                            <span>38zxc</span>
+                                            
                                         </div>
                                         <div className="tooth-info">
                                             <img src={toothXcrayImg}
@@ -313,25 +364,7 @@ function App() {
                                     </div>
 
                                 ))
-                            }
-
-                                <div className="analysis-section counter">
-
-                                    {
-                                    toothCategories && Object.entries(toothCategories).map((e, index) => (
-                                        <div className="counter-btn kist"
-                                            key={index}>
-                                            <div>{
-                                                e[0]
-                                            }</div>
-                                            <div>{
-                                                e[1].length
-                                            }</div>
-                                        </div>
-                                    ))
-                                } </div>
-
-                            </div>
+                            } </div>
                         </div>
                     </div>
                 )

@@ -1,4 +1,4 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
 
 body {
     background-color: #23252b;
@@ -10,17 +10,30 @@ body {
         background-color: #2d3134;
         margin-bottom: 15px;
         padding: 10px;
+        position: relative;
+
+        &.selected {
+            box-shadow: 0 0 10px 0px #5c5c5c;
+
+            .tooth-visibility{
+                background-color: #585858 !important;
+            }
+        }
 
         &.xray-img {
             position: relative;
             padding: 0 !important;
-            .teeth-bulgu{
+            .teeth-bulgu {
                 position: absolute;
-                
+                opacity: 0.4;
+
+                &.selected{
+                    background-color: red;
+                }
             }
-            &:hover{
-                .teeth-bulgu{
-                    background-color: rgba(255, 0, 0, 0.363);
+            &:hover {
+                .teeth-bulgu {
+                    background-color: blue;
                 }
             }
             img {
@@ -81,6 +94,18 @@ body {
                         margin-right: 15px;
                     }
                 }
+                &-visibility {
+                    position: absolute;
+                    right: 10px;
+                    top: 5px;
+                    width: 40px;
+                    cursor: pointer;
+                    border-radius: 4px;
+
+                    &:hover{
+                        background-color: #585858;
+                    }
+                }
             }
         }
 
@@ -120,7 +145,8 @@ body {
                     }
                 }
 
-                &.kist {
+                &.kist,
+                &.red {
                     & > * {
                         &:nth-child(1) {
                             &::before {
@@ -129,7 +155,8 @@ body {
                         }
                     }
                 }
-                &.gomulu {
+                &.gomulu,
+                &.green {
                     & > * {
                         &:nth-child(1) {
                             &::before {
@@ -138,7 +165,8 @@ body {
                         }
                     }
                 }
-                &.curuk {
+                &.curuk,
+                &.yellow {
                     & > * {
                         &:nth-child(1) {
                             &::before {
@@ -147,7 +175,8 @@ body {
                         }
                     }
                 }
-                &.kanal {
+                &.kanal,
+                &.blue {
                     & > * {
                         &:nth-child(1) {
                             &::before {
@@ -156,7 +185,8 @@ body {
                         }
                     }
                 }
-                &.dolgu {
+                &.dolgu,
+                &.black {
                     & > * {
                         &:nth-child(1) {
                             &::before {
