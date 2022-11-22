@@ -1,8 +1,8 @@
-import toothXcrayImg from "./assets/img/tooth-xray.png";
 import toothImg from "./assets/img/tooth.png";
 import eyeImg from "./assets/img/eye.png";
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 import axios from "axios";
+import CropTooth from "CropTooth";
 
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -32,7 +32,7 @@ function App() {
     useEffect(() => {
 
         const xrayImg = document.querySelector('.xray-img');
-        xrayDetail.map((e,index) => {
+        xrayDetail.map((e, index) => {
             const elementLeft = e.xmin * 100 / selectedFileSize.width;
             const elementTop = e.ymin * 100 / selectedFileSize.height;
             const elementWidth = (e.xmax - e.xmin) * 100 / selectedFileSize.width;
@@ -112,18 +112,17 @@ function App() {
     }
 
     const teethSelected = (num) => {
-        
-        if(document.querySelector(`.teeth-${num}`).classList.contains('selected')){
-           
+
+        if (document.querySelector(`.teeth-${num}`).classList.contains('selected')) {
+
             document.querySelector(`.teeth-${num}`).classList.remove('selected')
             document.querySelector(`.teeth-bulgu-${num}`).classList.remove('selected')
-        }
-        else{
+        } else {
             document.querySelector(`.teeth-${num}`).classList.add('selected')
             document.querySelector(`.teeth-bulgu-${num}`).classList.add('selected')
         }
-       
-        
+
+
     }
 
     return (
@@ -336,19 +335,40 @@ function App() {
                                 {
                                 xrayDetail.map((e, index) => (
 
-                                    <div className={`analysis-section details teeth-${index}`}
+                                    <div className={
+                                            `analysis-section details teeth-${index}`
+                                        }
                                         key={index}>
-                                            <img src={eyeImg}
-                                                alt="" className="tooth-visibility" onClick={() => teethSelected(index)}/>
+                                        <img src={eyeImg}
+                                            alt=""
+                                            className="tooth-visibility"
+                                            onClick={
+                                                () => teethSelected(index)
+                                            }/>
                                         <div className="tooth-numbers">
                                             <img src={toothImg}
                                                 alt=""/>
-                                            <span>38zxc</span>
-                                            
+                                            <span>{
+                                                index + 1
+                                            }</span>
+
                                         </div>
                                         <div className="tooth-info">
-                                            <img src={toothXcrayImg}
-                                                alt=""/>
+                                            <CropTooth img={selectedImg}
+                                                elementLeft={
+                                                    e.xmin
+                                                }
+                                                elementTop={
+                                                    e.ymin
+                                                }
+                                                elementWidth={
+                                                    e.xmax - e.xmin
+                                                }
+                                                elementHeight={
+                                                    e.ymax - e.ymin
+                                                }/>
+
+
                                             <div className="tooth-info-details">
                                                 <span className="text-info me-1">
                                                     {
